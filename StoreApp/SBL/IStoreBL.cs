@@ -1,19 +1,20 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using SModels;
 
 namespace SBL
 {
     public interface IStoreBL
     {
-        void getOrderHistory(Customers customer);
-        void getOrderHistory(Customers customer, int number);
+        void getOrderHistory(Customer customer);
+        void getOrderHistory(Customer customer, int number);
         void getOrderHistory(Store store, int number);
         void getOrderHistory(Store store);
-        void getLocationHistory(Customers customer);
+        void getLocationHistory(Customer customer);
         void getAllStoreNames();
         void getAllStoreNames(Manager manager);
-        void addCustomer(Customers newCustomer);
+        void addCustomer(Customer newCustomer);
         void addVisistedStore(LocationVisited store);
         void addNewOrder();
         void addOrderItem(OrderItem newOrderItem);
@@ -27,7 +28,7 @@ namespace SBL
         void updateStoreInventory(StoreInventory storeInventory);
         StoreInventory getInventoryItem(Product product, Store store);
         Store getStoreByName(String storeName);
-        Customers getCustomerByEmail(String email);
+        Customer getCustomerByEmail(String email);
         Product getProductByName(String productName);
         Product getStoreProductByName(String productName, Store store);
         Orders getMostRecentOrder();

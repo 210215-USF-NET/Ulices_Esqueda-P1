@@ -1,19 +1,20 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using SModels;
 
 namespace SDL
 {
     public interface IStoreRepo
     {
-        void getOrderHistory(Customers customer);
-        void getOrderHistory(Customers customer, int number);
+        void getOrderHistory(Customer customer);
+        void getOrderHistory(Customer customer, int number);
         void getOrderHistory(Store store, int number);
         void getOrderHistory(Store store);
-        void getLocationHistory(Customers customer);
+        void getLocationHistory(Customer customer);
         void getAllStoreNames();
         void addVisistedStore(LocationVisited store);
-        void addCustomer(Customers newCustomer);
+        Customer addCustomer(Customer newCustomer);
         void addNewOrder();
         void addOrderItem(OrderItem newOrderItem);
         void addTrackOrderItem(TrackOrder newTrackOrder);
@@ -28,7 +29,7 @@ namespace SDL
         Store getStoreByName(String storeName);
         Product getProductByName(String productName);
         Product getStoreProductByName(String productName, Store store);
-        Customers getCustomerByEmail(String email);
+        Customer getCustomerByEmail(String email);
         Orders getMostRecentOrder();
         OrderItem getMostRecentOrderItem();
         Manager getManagerByFirstName(String managerName);

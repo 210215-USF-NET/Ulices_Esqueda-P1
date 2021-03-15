@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using SModels;
 using SDL;
 
@@ -8,39 +9,48 @@ namespace SBL
     public class StoreBL : IStoreBL
     {
         private IStoreRepo _repo;
-        public StoreBL(IStoreRepo repo){
+        public StoreBL(IStoreRepo repo)
+        {
             _repo = repo;
         }
-        public void getOrderHistory(Customers customer){
+        public void getOrderHistory(Customer customer)
+        {
             _repo.getOrderHistory(customer);
         }
-        public void getOrderHistory(Customers customer, int number){
+        public void getOrderHistory(Customer customer, int number)
+        {
             _repo.getOrderHistory(customer, number);
         }
-        public void getOrderHistory(Store store, int number){
+        public void getOrderHistory(Store store, int number)
+        {
             _repo.getOrderHistory(store, number);
         }
-        public void getOrderHistory(Store store){
+        public void getOrderHistory(Store store)
+        {
             _repo.getOrderHistory(store);
         }
 
-        public void getLocationHistory(Customers customer){
+        public void getLocationHistory(Customer customer)
+        {
             _repo.getLocationHistory(customer);
         }
 
-        public void getAllStoreNames(){
+        public void getAllStoreNames()
+        {
             _repo.getAllStoreNames();
         }
 
-        public Store getStoreByName(String storeName){
+        public Store getStoreByName(String storeName)
+        {
             return _repo.getStoreByName(storeName);
         }
 
-        public Customers getCustomerByEmail(String email){
+        public Customer getCustomerByEmail(String email)
+        {
             return _repo.getCustomerByEmail(email);
         }
 
-        public void addCustomer(Customers newCustomer)
+        public void addCustomer(Customer newCustomer)
         {
             _repo.addCustomer(newCustomer);
         }

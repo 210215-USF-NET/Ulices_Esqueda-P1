@@ -1,11 +1,12 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace SModels
 {
-    public class Customers
+    public class Customer
     {
-        public int ID { get; set; } 
-
+        public int CustomerID { get; set; }
         public string CustomerFirstName { get; set; }
 
         public string CustomerLastName { get; set; }
@@ -14,7 +15,8 @@ namespace SModels
 
         public string CustomerPhoneNumber { get; set; }
 
-        public string getCustomerFullName(){
+        public string getCustomerFullName()
+        {
             return CustomerFirstName + " " + CustomerLastName;
         }
     }

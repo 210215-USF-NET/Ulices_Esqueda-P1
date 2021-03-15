@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using SModels;
 
 namespace SDL
@@ -11,14 +9,14 @@ namespace SDL
     public class StoreDBContext : DbContext
     {
         public StoreDBContext(DbContextOptions options) : base(options)
-        { 
+        {
         }
 
         protected StoreDBContext()
-        { 
+        {
         }
 
-        public DbSet<Customers> Customers { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<LocationVisited> LocationVisted { get; set; }
         public DbSet<Manager> Managers { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
