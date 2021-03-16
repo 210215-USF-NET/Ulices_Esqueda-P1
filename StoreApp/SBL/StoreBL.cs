@@ -1,30 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SDL;
 using SModels;
-using SDL;
+using System;
+using System.Collections.Generic;
 
 namespace SBL
 {
     public class StoreBL : IStoreBL
     {
         private IStoreRepo _repo;
+
         public StoreBL(IStoreRepo repo)
         {
             _repo = repo;
         }
+
         public void getOrderHistory(Customer customer)
         {
             _repo.getOrderHistory(customer);
         }
+
         public void getOrderHistory(Customer customer, int number)
         {
             _repo.getOrderHistory(customer, number);
         }
+
         public void getOrderHistory(Store store, int number)
         {
             _repo.getOrderHistory(store, number);
         }
+
         public void getOrderHistory(Store store)
         {
             _repo.getOrderHistory(store);
@@ -35,9 +39,9 @@ namespace SBL
             _repo.getLocationHistory(customer);
         }
 
-        public void getAllStoreNames()
+        public List<Store> getAllStores()
         {
-            _repo.getAllStoreNames();
+            return _repo.getAllStores();
         }
 
         public Store getStoreByName(String storeName)
@@ -50,9 +54,9 @@ namespace SBL
             return _repo.getCustomerByEmail(email);
         }
 
-        public void addCustomer(Customer newCustomer)
+        public Customer addCustomer(Customer newCustomer)
         {
-            _repo.addCustomer(newCustomer);
+            return _repo.addCustomer(newCustomer);
         }
 
         public void addVisistedStore(LocationVisited store)

@@ -1,17 +1,19 @@
-﻿using System;
+﻿using SModels;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using SModels;
+using System.Linq;
 
 namespace SDL
 {
     public class StoreRepoDB : IStoreRepo
     {
         private readonly StoreDBContext _context;
+
         public StoreRepoDB(StoreDBContext context)
         {
             _context = context;
         }
+
         public Customer addCustomer(Customer newCustomer)
         {
             _context.Customers.Add(newCustomer);
@@ -59,9 +61,9 @@ namespace SDL
             throw new NotImplementedException();
         }
 
-        public void getAllStoreNames()
+        public List<Store> getAllStores()
         {
-            throw new NotImplementedException();
+            return _context.Stores.Select(Store => Store).ToList();
         }
 
         public void getAllStoreNames(Manager manager)
@@ -71,7 +73,7 @@ namespace SDL
 
         public Customer getCustomerByEmail(string email)
         {
-            throw new NotImplementedException();
+            return _context.Customers.FirstOrDefault(cust => cust.Email == email);
         }
 
         public void getCustomerByName(string customerName)
@@ -136,7 +138,7 @@ namespace SDL
 
         public Store getStoreByName(string storeName)
         {
-            throw new NotImplementedException();
+            return _context.Stores.FirstOrDefault(store => store.StoreName == storeName);
         }
 
         public void getStoreInventory(Store store)

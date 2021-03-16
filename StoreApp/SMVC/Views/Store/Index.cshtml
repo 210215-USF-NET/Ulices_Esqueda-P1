@@ -1,0 +1,19 @@
+﻿@model IEnumerable<SMVC.Models.StoreListVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center text-white-50">All Stores</h1>
+<p class="text-xl-center">
+    @Html.ActionLink("The Crafty Minotaur", "Details", "Store")
+</p>
+
+@foreach (var item in Model)
+{
+    <div class="text-center bg-light">
+        @Html.ActionLink(item.StoreName, "Details", new { name = item.StoreName })
+    </div>
+
+}
+

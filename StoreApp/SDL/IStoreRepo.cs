@@ -12,7 +12,7 @@ namespace SDL
         void getOrderHistory(Store store, int number);
         void getOrderHistory(Store store);
         void getLocationHistory(Customer customer);
-        void getAllStoreNames();
+        List<Store> getAllStores();
         void addVisistedStore(LocationVisited store);
         Customer addCustomer(Customer newCustomer);
         void addNewOrder();

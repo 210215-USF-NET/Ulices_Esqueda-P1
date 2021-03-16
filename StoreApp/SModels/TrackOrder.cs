@@ -6,7 +6,7 @@ namespace SModels
 {
     public class TrackOrder
     {
-        public int TrackOrderID { get; set; }
+        public int ID { get; set; }
         public Customer Customer { get; set; }
         public Orders Order { get; set; }
         public OrderItem OrderItem { get; set; }

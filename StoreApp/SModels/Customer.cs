@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SModels
+﻿namespace SModels
 {
     public class Customer
     {
-        public int CustomerID { get; set; }
+        public int ID { get; set; }
         public string CustomerFirstName { get; set; }
 
         public string CustomerLastName { get; set; }
