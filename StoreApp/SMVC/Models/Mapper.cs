@@ -67,5 +67,25 @@ namespace SMVC.Models
                 Email = customer2bCasted.Email
             };
         }
+
+        public StoreInventory cast2StoreInventory(StoreInventoryVM store2bCasted)
+        {
+            return new StoreInventory
+            {
+                StoreID = store2bCasted.StoreID,
+                ProductID = store2bCasted.ProductID,
+                InventoryQuantity = store2bCasted.InventoryQuantity
+            };
+        }
+
+        public StoreInventoryVM cast2StoreInventoryVM(StoreInventory store2bCasted)
+        {
+            return new StoreInventoryVM
+            {
+                StoreID = store2bCasted.StoreID,
+                ProductID = store2bCasted.ProductID,
+                InventoryQuantity = store2bCasted.InventoryQuantity
+            };
+        }
     }
 }

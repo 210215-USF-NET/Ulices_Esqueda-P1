@@ -6,6 +6,8 @@
 
 @{
     ViewData["Title"] = "Details";
+    List<StoreInventory> storeInventories = ViewBag.storeInventories;
+    List<Product> products = ViewBag.products;
     Store store = ViewBag.Store;
     Customer customer;
     if (Context.Session.GetString("userData") == null)
@@ -22,12 +24,6 @@
     <h3 class="text-center text-white">@Model.StoreName</h3>
     <hr />
     <dl class="row">
-        @*        <dt class = "col-sm-2">
-                Store Name:
-            </dt>
-            <dd class = "col-sm-10">
-                @Model.StoreName
-            </dd>*@
         <dt class="col-sm-2 text-white-50">
             Store Location:
         </dt>
@@ -37,12 +33,50 @@
     </dl>
 </div>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th class="col-md-5 text-white-50">
+                Name:
+            </th>
+            <th class="col-md-3 text-white-50">
+                Price:
+            </th>
+            <th class="col-md-2 text-white-50">
+                Quantity:
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var inv in storeInventories)
+        {
+            @foreach (var prod in products)
+            {
+                @if (inv.ProductID == prod.ID)
+                {
+                    <tr>
+                        <td class="col-md-5 text-white-50">
+                            @prod.ProductName
+                        </td>
+                        <td class="col-md-3 text-white-50">
+                            @prod.Price
+                        </td>
+                        <td class="col-md-2 text-white-50">
+                            @inv.InventoryQuantity
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+
 @if (customer != null)
 {
     @if (customer.IsManager)
     {
         <div>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+            @Html.ActionLink("Add Products", "CreateStoreInventory", "Store", new { id = Model.ID })
         </div>
     }
 }

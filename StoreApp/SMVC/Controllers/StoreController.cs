@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SBL;
 using SModels;
 using SMVC.Models;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace SMVC.Controllers
@@ -40,12 +41,39 @@ namespace SMVC.Controllers
                 store.StoreID = _store.ID;
                 _storeBL.addVisistedStore(store);
             }
+            ViewBag.storeInventories = _storeBL.getStoreInventory(_store);
+            ViewBag.products = _storeBL.getAllProducts();
             return View(_store);
         }
 
         // GET: StoreController/Create
         public ActionResult Create()
         {
+            return View();
+        }
+        public ActionResult CreateStoreInventory(int id)
+        {
+            ViewBag.products = _storeBL.getAllProducts();
+            ViewBag.StoreID = id;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateStoreInventory(StoreInventoryVM inventoryVM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _storeBL.addProductToInventory(_mapper.cast2StoreInventory(inventoryVM));
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    return View();
+                }
+            }
             return View();
         }
 
@@ -67,13 +95,14 @@ namespace SMVC.Controllers
         // GET: StoreController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.products = _storeBL.getAllProducts();
+            return View(_storeBL.getStoreByID(id));
         }
 
         // POST: StoreController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(StoreInventory inventory)
         {
             try
             {

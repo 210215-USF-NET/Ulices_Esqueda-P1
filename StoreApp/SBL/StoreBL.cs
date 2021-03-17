@@ -98,9 +98,9 @@ namespace SBL
             return _repo.getMostRecentOrderItem();
         }
 
-        public void getStoreInventory(Store store)
+        public List<StoreInventory> getStoreInventory(Store store)
         {
-            _repo.getStoreInventory(store);
+            return _repo.getStoreInventory(store);
         }
 
         /*public Manager getManagerByFirstName(String managerName)
@@ -113,9 +113,9 @@ namespace SBL
             _repo.getCustomerByName(customerName);
         }
 
-        public void getAllProducts()
+        public List<Product> getAllProducts()
         {
-            _repo.getAllProducts();
+            return _repo.getAllProducts();
         }
 
         public void addProductToInventory(StoreInventory storeInventory)
@@ -161,6 +161,10 @@ namespace SBL
         public StoreInventory getInventoryItem(Product product, Store store)
         {
             return _repo.getInventoryItem(product, store);
+        }
+        public Store getStoreByID(int id)
+        {
+            return _repo.getStoreByID(id);
         }
     }
 }

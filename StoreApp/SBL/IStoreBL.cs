@@ -36,11 +36,12 @@ namespace SBL
 
         void addProductToDb(Product product);
 
-        void getStoreInventory(Store store);
+        List<StoreInventory> getStoreInventory(Store store);
 
         void getCustomerByName(String customerName);
+        Store getStoreByID(int id);
 
-        void getAllProducts();
+        List<Product> getAllProducts();
 
         void updateOrderTotal(Orders total);
 

@@ -14,6 +14,7 @@ namespace SMVC.Models
         RegisterCreateVM cast2RegisterCreateVM(Customer customer2bCasted);
         Customer cast2Customer(LoginCreateVM customer2bCasted);
         LoginCreateVM cast2LoginCreateVM(Customer customer2bCasted);
-
+        StoreInventory cast2StoreInventory(StoreInventoryVM store2bCasted);
+        StoreInventoryVM cast2StoreInventoryVM(StoreInventory store2bCasted);
     }
 }

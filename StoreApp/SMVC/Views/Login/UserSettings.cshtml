@@ -1,6 +1,17 @@
-﻿
+﻿@using SModels;
+@using System.Text.Json;
+@using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "UserSettings";
+    Customer customer;
+    if (Context.Session.GetString("userData") == null)
+    {
+        customer = null;
+    }
+    else
+    {
+        customer = JsonSerializer.Deserialize<Customer>(Context.Session.GetString("userData"));
+    }
 }
 
 <h1 class="text-white-50">User Settings</h1>
@@ -17,6 +28,15 @@
             <div class="form-group">
                 <a class="nav-link text-dark text-center bg-danger" asp-area="" asp-controller="Login" asp-action="LocationHistory">Location History</a>
             </div>
+            @if (customer != null)
+            {
+                @if (customer.IsManager)
+                {
+                    <div class="form-group">
+                        <a class="nav-link text-dark text-center bg-danger" asp-area="" asp-controller="Login" asp-action="LocationHistory">Order History of Location</a>
+                    </div>
+                }
+            }
         </form>
     </div>
 </div>

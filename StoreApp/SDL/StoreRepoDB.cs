@@ -38,7 +38,8 @@ namespace SDL
 
         public void addProductToInventory(StoreInventory storeInventory)
         {
-            throw new NotImplementedException();
+            _context.StoreInventories.Add(storeInventory);
+            _context.SaveChanges();
         }
 
         public void addTrackOrderItem(TrackOrder newTrackOrder)
@@ -57,9 +58,9 @@ namespace SDL
             throw new NotImplementedException();
         }
 
-        public void getAllProducts()
+        public List<Product> getAllProducts()
         {
-            throw new NotImplementedException();
+            return _context.Products.Select(c => c).ToList();
         }
 
         public List<Store> getAllStores()
@@ -161,9 +162,9 @@ namespace SDL
             return _context.Stores.First(store => store.StoreName == storeName);
         }
 
-        public void getStoreInventory(Store store)
+        public List<StoreInventory> getStoreInventory(Store store)
         {
-            throw new NotImplementedException();
+            return _context.StoreInventories.Where(s => s.StoreID == store.ID).ToList();
         }
 
         public Product getStoreProductByName(string productName, Store store)

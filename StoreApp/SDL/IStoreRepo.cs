@@ -21,9 +21,9 @@ namespace SDL
         void addTrackOrderItem(TrackOrder newTrackOrder);
         void addProductToInventory(StoreInventory storeInventory);
         void addProductToDb(Product product);
-        void getStoreInventory(Store store);
+        List<StoreInventory> getStoreInventory(Store store);
         void getCustomerByName(String customerName);
-        void getAllProducts();
+        List<Product> getAllProducts();
         void updateOrderTotal(Orders total);
         void updateStoreInventory(StoreInventory storeInventory);
         Store getStoreByName(String storeName);
@@ -35,5 +35,6 @@ namespace SDL
         bool checkStoreInventory(Store store);
         int getInventoryQuantity(Product product, Store store);
         StoreInventory getInventoryItem(Product product, Store store);
+        Store getStoreByID(int id);
     }
 }
