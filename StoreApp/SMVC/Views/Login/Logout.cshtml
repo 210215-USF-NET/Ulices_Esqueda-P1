@@ -1,8 +1,7 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Logout";
+    Context.Session.Clear();
 }
 
-<h1>You have successfully logged out. Thank you for shopping with us. Come again.</h1>
-@ViewData["User"] = null;
+<h3 class="text-center text-white-50">You have successfully logged out. Thank you for shopping with us. Come again.</h3>
 

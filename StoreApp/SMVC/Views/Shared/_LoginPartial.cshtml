@@ -1,28 +1,36 @@
-﻿<ul class="navbar-nav">
-    @if (ViewData["User"] == null)
+﻿@using SModels;
+@using System.Text.Json;
+@using Microsoft.AspNetCore.Http;
+
+@{ 
+    Customer customer;
+    if (Context.Session.GetString("userData") == null)
     {
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Create">Register</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Create">Login</a>
-            </li>
-        </ul>
+        customer = null;
     }
     else
     {
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Create">Hello</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Delete">Logout</a>
-            </li>
-        </ul>
+        customer = JsonSerializer.Deserialize<Customer>(Context.Session.GetString("userData"));
+    }
+}
+
+<ul class="navbar-nav">
+    @if (customer != null)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="UserSettings">@customer.CustomerFirstName</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Create">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Create">Login</a>
+        </li>
     }
 </ul>

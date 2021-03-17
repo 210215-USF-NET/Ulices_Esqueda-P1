@@ -1,0 +1,38 @@
+﻿@model IEnumerable<SModels.Orders>
+
+@{
+    ViewData["Title"] = "OrderHistory";
+}
+
+<h1 class="text-white text-center">Order History</h1>
+
+<table class="table">
+    <thead class="text-white-50">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderTotal)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderTotal)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

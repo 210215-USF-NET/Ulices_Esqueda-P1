@@ -9,6 +9,6 @@ namespace SModels
         public int ID { get; set; }
         public string StoreName { get; set; }
         public string StoreLocation { get; set; }
-        public Manager StoreManager { get; set; }
+        public Customer Customer { get; set; }
     }
 }

@@ -4,10 +4,8 @@ using Microsoft.Extensions.Logging;
 using SBL;
 using SModels;
 using SMVC.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace SMVC.Controllers
 {
@@ -35,7 +33,20 @@ namespace SMVC.Controllers
         {
             return View();
         }
-
+        public ActionResult UserSettings()
+        {
+            return View();
+        }
+        public ActionResult UserInformation()
+        {
+            return View();
+        }
+        public ActionResult OrderHistory()
+        {
+            _customer = JsonSerializer.Deserialize<Customer>(HttpContext.Session.GetString("userData"));
+            List<Orders> orders = _storeBL.getOrderHistory(_customer);
+            return View(orders);
+        }
         // GET: LoginController/Details/5
         public ActionResult Details(int id)
         {
@@ -45,7 +56,7 @@ namespace SMVC.Controllers
         // GET: LoginController/Create
         public ActionResult Create()
         {
-            _logger.LogInformation("User is logged in");
+            
             return View();
         }
 
@@ -58,8 +69,9 @@ namespace SMVC.Controllers
             {
                 try
                 {
+                    _logger.LogInformation("User is logged in");
                     _customer = _storeBL.getCustomerByEmail(_mapper.cast2Customer(customer).Email);
-                    ViewData["User"] = _customer;
+                    HttpContext.Session.SetString("userData", JsonSerializer.Serialize(_customer));
                     return RedirectToAction(nameof(Index));
                 }
                 catch
@@ -67,6 +79,7 @@ namespace SMVC.Controllers
                     return View();
                 }
             }
+
             return View();
         }
 

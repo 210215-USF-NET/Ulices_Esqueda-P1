@@ -38,6 +38,9 @@ namespace SDL.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsManager")
+                        .HasColumnType("boolean");
+
                     b.HasKey("ID");
 
                     b.ToTable("Customers");
@@ -63,24 +66,6 @@ namespace SDL.Migrations
                     b.HasIndex("StoreID");
 
                     b.ToTable("LocationVisted");
-                });
-
-            modelBuilder.Entity("SModels.Manager", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("ManagerFirstName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ManagerLastName")
-                        .HasColumnType("text");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Managers");
                 });
 
             modelBuilder.Entity("SModels.OrderItem", b =>
@@ -146,18 +131,18 @@ namespace SDL.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int?>("CustomerID")
+                        .HasColumnType("integer");
+
                     b.Property<string>("StoreLocation")
                         .HasColumnType("text");
-
-                    b.Property<int?>("StoreManagerID")
-                        .HasColumnType("integer");
 
                     b.Property<string>("StoreName")
                         .HasColumnType("text");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("StoreManagerID");
+                    b.HasIndex("CustomerID");
 
                     b.ToTable("Stores");
                 });
@@ -245,11 +230,11 @@ namespace SDL.Migrations
 
             modelBuilder.Entity("SModels.Store", b =>
                 {
-                    b.HasOne("SModels.Manager", "StoreManager")
+                    b.HasOne("SModels.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("StoreManagerID");
+                        .HasForeignKey("CustomerID");
 
-                    b.Navigation("StoreManager");
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("SModels.StoreInventory", b =>

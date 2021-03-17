@@ -10,6 +10,7 @@
         public string Email { get; set; }
 
         public string CustomerPhoneNumber { get; set; }
+        public bool IsManager { get; set; }
 
         public string getCustomerFullName()
         {

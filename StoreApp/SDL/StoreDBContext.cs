@@ -15,7 +15,6 @@ namespace SDL
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<LocationVisited> LocationVisted { get; set; }
-        public DbSet<Manager> Managers { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Orders> Orders { get; set; }
         public DbSet<Product> Products { get; set; }

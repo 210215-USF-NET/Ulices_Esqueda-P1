@@ -17,25 +17,12 @@ namespace SDL.Migrations
                     CustomerFirstName = table.Column<string>(type: "text", nullable: true),
                     CustomerLastName = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
-                    CustomerPhoneNumber = table.Column<string>(type: "text", nullable: true)
+                    CustomerPhoneNumber = table.Column<string>(type: "text", nullable: true),
+                    IsManager = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Managers",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ManagerFirstName = table.Column<string>(type: "text", nullable: true),
-                    ManagerLastName = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Managers", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,15 +61,15 @@ namespace SDL.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     StoreName = table.Column<string>(type: "text", nullable: true),
                     StoreLocation = table.Column<string>(type: "text", nullable: true),
-                    StoreManagerID = table.Column<int>(type: "integer", nullable: true)
+                    CustomerID = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Stores", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Stores_Managers_StoreManagerID",
-                        column: x => x.StoreManagerID,
-                        principalTable: "Managers",
+                        name: "FK_Stores_Customers_CustomerID",
+                        column: x => x.CustomerID,
+                        principalTable: "Customers",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -226,9 +213,9 @@ namespace SDL.Migrations
                 column: "StoreID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Stores_StoreManagerID",
+                name: "IX_Stores_CustomerID",
                 table: "Stores",
-                column: "StoreManagerID");
+                column: "CustomerID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TrackOrders_CustomerID",
@@ -263,9 +250,6 @@ namespace SDL.Migrations
                 name: "TrackOrders");
 
             migrationBuilder.DropTable(
-                name: "Customers");
-
-            migrationBuilder.DropTable(
                 name: "OrderItems");
 
             migrationBuilder.DropTable(
@@ -278,7 +262,7 @@ namespace SDL.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Managers");
+                name: "Customers");
         }
     }
 }

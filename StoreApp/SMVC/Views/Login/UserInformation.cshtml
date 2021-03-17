@@ -1,0 +1,55 @@
+﻿@model SModels.Customer
+@using SModels;
+@using System.Text.Json;
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "UserInformation";
+    Customer customer = JsonSerializer.Deserialize<Customer>(Context.Session.GetString("userData"));
+}
+
+<h1 class="text-white">Your Information</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        @*<dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.ID)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.ID)
+            </dd>*@
+        <dt class="col-sm-3">
+            <p class="text-white-50">First name: </p>
+        </dt>
+        <dd class="col-sm-9 text-white-50">
+            @customer.CustomerFirstName
+        </dd>
+        <dt class="col-sm-3">
+            <p class="text-white-50">Last name: </p>
+        </dt>
+        <dd class="col-sm-9 text-white-50">
+            @customer.CustomerLastName
+        </dd>
+        <dt class="col-sm-3">
+            <p class="text-white-50">Email: </p>
+        </dt>
+        <dd class="col-sm-9 text-white-50">
+            @customer.Email
+        </dd>
+        <dt class="col-sm-3">
+            <p class="text-white-50">Phone Number: </p>
+        </dt>
+        <dd class="col-sm-9 text-white-50">
+            @customer.CustomerPhoneNumber
+        </dd>
+        @*<dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.IsManager)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.IsManager)
+            </dd>*@
+    </dl>
+</div>
+@*<div class="col-sm-3 text-center">
+    <a class="nav-link text-dark bg-info" asp-area="" asp-controller="Login" asp-action="Edit">Edit</a>
+</div>*@

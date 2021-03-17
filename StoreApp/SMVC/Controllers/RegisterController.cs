@@ -7,6 +7,7 @@ using SMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SMVC.Controllers
@@ -38,7 +39,6 @@ namespace SMVC.Controllers
         // GET: RegisterController/Create
         public ActionResult Create()
         {
-            _logger.LogInformation("User is Registered");
             return View();
         }
 
@@ -51,8 +51,10 @@ namespace SMVC.Controllers
             {
                 try
                 {
-                    _customer = _storeBL.addCustomer(_mapper.cast2Customer(customer));
-                    ViewData["User"] = _customer;
+                    _logger.LogInformation("User is registered");
+                    _storeBL.addCustomer(_mapper.cast2Customer(customer));
+                    _customer = _storeBL.getCustomerByEmail(_mapper.cast2Customer(customer).Email);
+                    HttpContext.Session.SetString("userData", JsonSerializer.Serialize(_customer));
                     return RedirectToAction(nameof(Index));
                 }
                 catch

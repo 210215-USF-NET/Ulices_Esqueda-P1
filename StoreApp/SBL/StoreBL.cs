@@ -14,9 +14,9 @@ namespace SBL
             _repo = repo;
         }
 
-        public void getOrderHistory(Customer customer)
+        public List<Orders> getOrderHistory(Customer customer)
         {
-            _repo.getOrderHistory(customer);
+            return _repo.getOrderHistory(customer);
         }
 
         public void getOrderHistory(Customer customer, int number)
@@ -99,10 +99,10 @@ namespace SBL
             _repo.getStoreInventory(store);
         }
 
-        public Manager getManagerByFirstName(String managerName)
+        /*public Manager getManagerByFirstName(String managerName)
         {
             return _repo.getManagerByFirstName(managerName);
-        }
+        }*/
 
         public void getCustomerByName(string customerName)
         {
@@ -124,10 +124,10 @@ namespace SBL
             _repo.addProductToDb(product);
         }
 
-        public void getAllStoreNames(Manager manager)
+        /*public void getAllStoreNames(Manager manager)
         {
             _repo.getAllStoreNames(manager);
-        }
+        }*/
 
         public void updateOrderTotal(Orders total)
         {

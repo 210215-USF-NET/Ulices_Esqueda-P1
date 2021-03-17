@@ -66,10 +66,10 @@ namespace SDL
             return _context.Stores.Select(Store => Store).ToList();
         }
 
-        public void getAllStoreNames(Manager manager)
+        /*public void getAllStoreNames(Manager manager)
         {
             throw new NotImplementedException();
-        }
+        }*/
 
         public Customer getCustomerByEmail(string email)
         {
@@ -96,10 +96,10 @@ namespace SDL
             throw new NotImplementedException();
         }
 
-        public Manager getManagerByFirstName(string managerName)
+        /*public Manager getManagerByFirstName(string managerName)
         {
             throw new NotImplementedException();
-        }
+        }*/
 
         public Orders getMostRecentOrder()
         {
@@ -111,9 +111,25 @@ namespace SDL
             throw new NotImplementedException();
         }
 
-        public void getOrderHistory(Customer customer)
+        public List<Orders> getOrderHistory(Customer customer)
         {
-            throw new NotImplementedException();
+            /*var innerJoin = _context.Orders.Join(
+                _context.TrackOrders,
+                order => order.ID,
+                track => track.Order.ID,
+                (order, track) => new
+                {
+                    order.OrderDate,
+                    order.OrderTotal
+                }
+                ).ToList();*/
+            List<int> orderIDS = _context.TrackOrders.Where(cust => cust.ID == customer.ID).Select(order => order.Order.ID).ToList();
+            List<Orders> orders = new List<Orders>();
+            foreach (var value in orderIDS)
+            {
+                orders.Add(_context.Orders.Where(o => o.ID == value).FirstOrDefault());
+            }
+            return orders;
         }
 
         public void getOrderHistory(Customer customer, int number)
