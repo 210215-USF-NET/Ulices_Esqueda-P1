@@ -7,7 +7,7 @@ namespace SModels
     public class LocationVisited
     {
         public int ID { get; set; }
-        public Customer Customer { get; set; }
-        public Store Store { get; set; }
+        public int CustomerID { get; set; }
+        public int StoreID { get; set; }
     }
 }

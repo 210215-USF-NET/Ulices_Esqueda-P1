@@ -15,7 +15,5 @@ namespace SMVC.Models
         public string StoreName { get; set; }
         [DisplayName("Store Location")]
         public string StoreLocation { get; set; }
-        [DisplayName("Store Manager")]
-        public Customer StoreManager { get; set; }
     }
 }

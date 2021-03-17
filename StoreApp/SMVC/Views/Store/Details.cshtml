@@ -36,12 +36,13 @@
         </dd>
     </dl>
 </div>
+
 @if (customer != null)
 {
     @if (customer.IsManager)
     {
         <div>
-            @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
         </div>
     }
 }

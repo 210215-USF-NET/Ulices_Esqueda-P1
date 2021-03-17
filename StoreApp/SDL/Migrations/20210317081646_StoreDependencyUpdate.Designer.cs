@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SDL;
@@ -9,9 +10,10 @@ using SDL;
 namespace SDL.Migrations
 {
     [DbContext(typeof(StoreDBContext))]
-    partial class StoreDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210317081646_StoreDependencyUpdate")]
+    partial class StoreDependencyUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,13 +55,17 @@ namespace SDL.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("CustomerID")
+                    b.Property<int?>("CustomerID")
                         .HasColumnType("integer");
 
-                    b.Property<int>("StoreID")
+                    b.Property<int?>("StoreID")
                         .HasColumnType("integer");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("CustomerID");
+
+                    b.HasIndex("StoreID");
 
                     b.ToTable("LocationVisted");
                 });
@@ -71,13 +77,15 @@ namespace SDL.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("ProductID")
+                    b.Property<int?>("ProductID")
                         .HasColumnType("integer");
 
                     b.Property<int>("ProductQuantity")
                         .HasColumnType("integer");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("ProductID");
 
                     b.ToTable("OrderItems");
                 });
@@ -146,13 +154,17 @@ namespace SDL.Migrations
                     b.Property<int>("InventoryQuantity")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ProductID")
+                    b.Property<int?>("ProductID")
                         .HasColumnType("integer");
 
-                    b.Property<int>("StoreID")
+                    b.Property<int?>("StoreID")
                         .HasColumnType("integer");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex("StoreID");
 
                     b.ToTable("StoreInventories");
                 });
@@ -164,21 +176,95 @@ namespace SDL.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("CustomerID")
+                    b.Property<int?>("CustomerID")
                         .HasColumnType("integer");
 
-                    b.Property<int>("OrderID")
+                    b.Property<int?>("OrderID")
                         .HasColumnType("integer");
 
-                    b.Property<int>("OrderItemID")
+                    b.Property<int?>("OrderItemID")
                         .HasColumnType("integer");
 
-                    b.Property<int>("StoreID")
+                    b.Property<int?>("StoreID")
                         .HasColumnType("integer");
 
                     b.HasKey("ID");
 
+                    b.HasIndex("CustomerID");
+
+                    b.HasIndex("OrderID");
+
+                    b.HasIndex("OrderItemID");
+
+                    b.HasIndex("StoreID");
+
                     b.ToTable("TrackOrders");
+                });
+
+            modelBuilder.Entity("SModels.LocationVisited", b =>
+                {
+                    b.HasOne("SModels.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerID");
+
+                    b.HasOne("SModels.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreID");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Store");
+                });
+
+            modelBuilder.Entity("SModels.OrderItem", b =>
+                {
+                    b.HasOne("SModels.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("SModels.StoreInventory", b =>
+                {
+                    b.HasOne("SModels.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID");
+
+                    b.HasOne("SModels.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreID");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Store");
+                });
+
+            modelBuilder.Entity("SModels.TrackOrder", b =>
+                {
+                    b.HasOne("SModels.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerID");
+
+                    b.HasOne("SModels.Orders", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderID");
+
+                    b.HasOne("SModels.OrderItem", "OrderItem")
+                        .WithMany()
+                        .HasForeignKey("OrderItemID");
+
+                    b.HasOne("SModels.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreID");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("OrderItem");
+
+                    b.Navigation("Store");
                 });
 #pragma warning restore 612, 618
         }

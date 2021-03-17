@@ -51,6 +51,7 @@ namespace SMVC.Controllers
         {
             _customer = JsonSerializer.Deserialize<Customer>(HttpContext.Session.GetString("userData"));
             List<Store> storesVisited = _storeBL.getLocationHistory(_customer);
+            ViewBag.Store = storesVisited;
             return View(storesVisited);
         }
         // GET: LoginController/Details/5

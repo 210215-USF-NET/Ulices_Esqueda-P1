@@ -1,30 +1,33 @@
-﻿@model IEnumerable<SModels.Store>
+﻿@using SModels;
+@using System.Collections.Generic;
+@model IEnumerable<SModels.Store>
 
 @{
     ViewData["Title"] = "LocationHistory";
+    List<Store> storeList = ViewBag.Store;
 }
 
-<h1 class="text-center text-white-50">Location History</h1>
+<h1 class="text-center text-white">Location History</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th class="text-white-50">
                 @Html.DisplayNameFor(model => model.StoreName)
             </th>
-            <th>
+            <th class="text-white-50">
                 @Html.DisplayNameFor(model => model.StoreLocation)
             </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in storeList) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StoreName)
+            <td class="text-white-50">
+                @item.StoreName
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StoreLocation)
+            <td class="text-white-50">
+                @item.StoreLocation
             </td>
         </tr>
 }

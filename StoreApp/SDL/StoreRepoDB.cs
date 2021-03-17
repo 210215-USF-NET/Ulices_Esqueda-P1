@@ -48,7 +48,8 @@ namespace SDL
 
         public void addVisistedStore(LocationVisited store)
         {
-            throw new NotImplementedException();
+            _context.LocationVisted.Add(store);
+            _context.SaveChanges();
         }
 
         public bool checkStoreInventory(Store store)
@@ -93,13 +94,20 @@ namespace SDL
 
         public List<Store> getLocationHistory(Customer customer)
         {
-            List<int> storeIDS = _context.LocationVisted.Where(cust => cust.ID == customer.ID).Select(store => store.Store.ID).ToList();
+            List<int> storeIDS = _context.LocationVisted.Where(c => c.CustomerID == customer.ID).Select(s => s.StoreID).ToList();
             List<Store> stores = new List<Store>();
-            foreach (var value in storeIDS)
+            foreach (var item in storeIDS)
             {
-                stores.Add(_context.Stores.Where(o => o.ID == value).FirstOrDefault());
+                stores.Add(_context.Stores.Where(o => o.ID == item).FirstOrDefault());
             }
             return stores;
+        }
+
+
+        public Store getStoreByID(int id)
+        {
+            
+            return _context.Stores.First(s => s.ID == id);
         }
 
         /*public Manager getManagerByFirstName(string managerName)
@@ -119,17 +127,7 @@ namespace SDL
 
         public List<Orders> getOrderHistory(Customer customer)
         {
-            /*var innerJoin = _context.Orders.Join(
-                _context.TrackOrders,
-                order => order.ID,
-                track => track.Order.ID,
-                (order, track) => new
-                {
-                    order.OrderDate,
-                    order.OrderTotal
-                }
-                ).ToList();*/
-            List<int> orderIDS = _context.TrackOrders.Where(cust => cust.ID == customer.ID).Select(order => order.Order.ID).ToList();
+            List<int> orderIDS = _context.TrackOrders.Where(cust => cust.CustomerID == customer.ID).Select(order => order.OrderID).ToList();
             List<Orders> orders = new List<Orders>();
             foreach (var value in orderIDS)
             {
@@ -179,6 +177,11 @@ namespace SDL
         }
 
         public void updateStoreInventory(StoreInventory storeInventory)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<LocationVisited> getLocationHistory2(Customer customer)
         {
             throw new NotImplementedException();
         }

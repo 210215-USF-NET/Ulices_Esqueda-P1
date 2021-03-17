@@ -38,6 +38,10 @@ namespace SBL
         {
             return _repo.getLocationHistory(customer);
         }
+        public List<LocationVisited> getLocationHistory2(Customer customer)
+        {
+            return _repo.getLocationHistory2(customer);
+        }
 
         public List<Store> getAllStores()
         {

@@ -3,10 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SBL;
 using SModels;
 using SMVC.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace SMVC.Controllers
 {
@@ -23,6 +20,7 @@ namespace SMVC.Controllers
             _storeBL = storeBL;
             _mapper = mapper;
         }
+
         // GET: StoreController
         public ActionResult Index()
         {
@@ -34,6 +32,14 @@ namespace SMVC.Controllers
         {
             _store = _storeBL.getStoreByName(StoreName);
             ViewBag.Store = _store;
+            if (HttpContext.Session.GetString("userData") != null)
+            {
+                _customer = JsonSerializer.Deserialize<Customer>(HttpContext.Session.GetString("userData"));
+                LocationVisited store = new LocationVisited();
+                store.CustomerID = _customer.ID;
+                store.StoreID = _store.ID;
+                _storeBL.addVisistedStore(store);
+            }
             return View(_store);
         }
 

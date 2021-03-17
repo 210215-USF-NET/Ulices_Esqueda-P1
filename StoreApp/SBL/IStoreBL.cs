@@ -16,6 +16,8 @@ namespace SBL
 
         List<Store> getLocationHistory(Customer customer);
 
+        List<LocationVisited> getLocationHistory2(Customer customer);
+
         List<Store> getAllStores();
 
         //void getAllStoreNames(Manager manager);

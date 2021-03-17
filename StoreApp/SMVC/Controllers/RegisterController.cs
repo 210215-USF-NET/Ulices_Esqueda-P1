@@ -52,8 +52,7 @@ namespace SMVC.Controllers
                 try
                 {
                     _logger.LogInformation("User is registered");
-                    _storeBL.addCustomer(_mapper.cast2Customer(customer));
-                    _customer = _storeBL.getCustomerByEmail(_mapper.cast2Customer(customer).Email);
+                    _customer = _storeBL.addCustomer(_mapper.cast2Customer(customer));
                     HttpContext.Session.SetString("userData", JsonSerializer.Serialize(_customer));
                     return RedirectToAction(nameof(Index));
                 }
