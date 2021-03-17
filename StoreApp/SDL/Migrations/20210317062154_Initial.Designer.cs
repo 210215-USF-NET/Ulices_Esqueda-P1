@@ -10,7 +10,7 @@ using SDL;
 namespace SDL.Migrations
 {
     [DbContext(typeof(StoreDBContext))]
-    [Migration("20210317004601_Initial")]
+    [Migration("20210317062154_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

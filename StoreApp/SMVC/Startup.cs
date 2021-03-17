@@ -31,13 +31,13 @@ namespace SMVC
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(10000000);
+                options.IdleTimeout = TimeSpan.FromSeconds(60);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
             services.AddControllersWithViews();
             //services.AddDbContext<DbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDbContext<StoreDBContext>(options => options.UseNpgsql(Configuration.GetConnectionString("StoreDB")));
+            services.AddDbContext<StoreDBContext>(options => options.UseNpgsql(Configuration.GetConnectionString("StoreDB3")));
             services.AddScoped<IStoreBL, StoreBL>();
             services.AddScoped<IStoreRepo, StoreRepoDB>();
             services.AddScoped<IMapper, Mapper>();

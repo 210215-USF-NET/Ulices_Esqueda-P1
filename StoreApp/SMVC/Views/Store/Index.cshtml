@@ -1,19 +1,27 @@
-﻿@model IEnumerable<SMVC.Models.StoreListVM>
+﻿@model IEnumerable<SModels.Store>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center text-white-50">All Stores</h1>
-<p class="text-xl-center">
-    @Html.ActionLink("The Crafty Minotaur", "Details", "Store")
-</p>
+<h1 class="text-center text-white">All Stores</h1>
 
-@foreach (var item in Model)
-{
-    <div class="text-center bg-light">
-        @Html.ActionLink(item.StoreName, "Details", new { name = item.StoreName })
-    </div>
-
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-white-50">
+                @Html.DisplayNameFor(model => model.StoreName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.ActionLink(item.StoreName, "Details", "Store", new { item.StoreName })
+            </td>
+        </tr>
 }
-
+    </tbody>
+</table>

@@ -14,7 +14,7 @@ namespace SBL
 
         void getOrderHistory(Store store);
 
-        void getLocationHistory(Customer customer);
+        List<Store> getLocationHistory(Customer customer);
 
         List<Store> getAllStores();
 

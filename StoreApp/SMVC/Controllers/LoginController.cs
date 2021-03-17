@@ -47,6 +47,12 @@ namespace SMVC.Controllers
             List<Orders> orders = _storeBL.getOrderHistory(_customer);
             return View(orders);
         }
+        public ActionResult LocationHistory()
+        {
+            _customer = JsonSerializer.Deserialize<Customer>(HttpContext.Session.GetString("userData"));
+            List<Store> storesVisited = _storeBL.getLocationHistory(_customer);
+            return View(storesVisited);
+        }
         // GET: LoginController/Details/5
         public ActionResult Details(int id)
         {

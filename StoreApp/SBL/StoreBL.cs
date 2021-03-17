@@ -34,9 +34,9 @@ namespace SBL
             _repo.getOrderHistory(store);
         }
 
-        public void getLocationHistory(Customer customer)
+        public List<Store> getLocationHistory(Customer customer)
         {
-            _repo.getLocationHistory(customer);
+            return _repo.getLocationHistory(customer);
         }
 
         public List<Store> getAllStores()

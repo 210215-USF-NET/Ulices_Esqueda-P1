@@ -1,0 +1,32 @@
+﻿@model IEnumerable<SModels.Store>
+
+@{
+    ViewData["Title"] = "LocationHistory";
+}
+
+<h1 class="text-center text-white-50">Location History</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StoreName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StoreLocation)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StoreName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StoreLocation)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

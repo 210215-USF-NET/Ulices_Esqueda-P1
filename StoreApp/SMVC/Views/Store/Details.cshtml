@@ -1,32 +1,49 @@
-﻿@model SMVC.Models.StoreListVM
+﻿@using SModels;
+@using System.Text.Json;
+@using Microsoft.AspNetCore.Http;
+@model SModels.Store
+
 
 @{
     ViewData["Title"] = "Details";
+    Store store = ViewBag.Store;
+    Customer customer;
+    if (Context.Session.GetString("userData") == null)
+    {
+        customer = null;
+    }
+    else
+    {
+        customer = JsonSerializer.Deserialize<Customer>(Context.Session.GetString("userData"));
+    }
 }
 
-<h1 class="text-center text-white-50">Welcome to @Html.DisplayFor(model => model.StoreName)!</h1>
-@* 
-Need to add a image of the shopkeeper and their name and a description to the shop.    
-*@
-
-
 <div>
+    <h3 class="text-center text-white">@Model.StoreName</h3>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StoreName)
+        @*        <dt class = "col-sm-2">
+                Store Name:
+            </dt>
+            <dd class = "col-sm-10">
+                @Model.StoreName
+            </dd>*@
+        <dt class="col-sm-2 text-white-50">
+            Store Location:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10 text-white-50">
+            @Model.StoreLocation
         </dd>
     </dl>
 </div>
-<div>
-    @{
-        var user = (SModels.Customer)ViewData["User"];
-        if (user.IsManager)
-        {
-            @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ });
-        }
+@if (customer != null)
+{
+    @if (customer.IsManager)
+    {
+        <div>
+            @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ })
+        </div>
     }
-    <a asp-action="Index">Back to List</a>
-</div>
+}
+
+

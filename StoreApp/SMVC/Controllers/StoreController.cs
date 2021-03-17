@@ -26,13 +26,15 @@ namespace SMVC.Controllers
         // GET: StoreController
         public ActionResult Index()
         {
-            return View(_storeBL.getAllStores().Select(store => _mapper.cast2StoreListVM(store)).ToList());
+            return View(_storeBL.getAllStores());
         }
 
-        // GET: StoreController/Details/5
-        public ActionResult Details(string name)
+        // GET: StoreController/Details/StoreName={storename}
+        public ActionResult Details(string StoreName)
         {
-            return View(_mapper.cast2StoreListVM(_storeBL.getStoreByName(name)));
+            _store = _storeBL.getStoreByName(StoreName);
+            ViewBag.Store = _store;
+            return View(_store);
         }
 
         // GET: StoreController/Create

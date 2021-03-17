@@ -91,9 +91,15 @@ namespace SDL
             throw new NotImplementedException();
         }
 
-        public void getLocationHistory(Customer customer)
+        public List<Store> getLocationHistory(Customer customer)
         {
-            throw new NotImplementedException();
+            List<int> storeIDS = _context.LocationVisted.Where(cust => cust.ID == customer.ID).Select(store => store.Store.ID).ToList();
+            List<Store> stores = new List<Store>();
+            foreach (var value in storeIDS)
+            {
+                stores.Add(_context.Stores.Where(o => o.ID == value).FirstOrDefault());
+            }
+            return stores;
         }
 
         /*public Manager getManagerByFirstName(string managerName)
@@ -154,7 +160,7 @@ namespace SDL
 
         public Store getStoreByName(string storeName)
         {
-            return _context.Stores.FirstOrDefault(store => store.StoreName == storeName);
+            return _context.Stores.First(store => store.StoreName == storeName);
         }
 
         public void getStoreInventory(Store store)
