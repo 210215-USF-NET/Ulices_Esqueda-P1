@@ -1,7 +1,11 @@
-﻿@{
+﻿@using SModels;
+@using System.Text.Json;
+@using Microsoft.AspNetCore.Http;
+@{
     ViewData["Title"] = "Logout";
     Context.Session.Clear();
 }
 
 <h3 class="text-center text-white-50">You have successfully logged out. Thank you for shopping with us. Come again.</h3>
+<a class="navbar-light" asp-area="" asp-controller="Home" asp-action="IndexOrder">Home</a>
 
