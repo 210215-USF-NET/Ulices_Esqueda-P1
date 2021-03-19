@@ -22,22 +22,23 @@
         </tr>
     </thead>
     <tbody class="text-white-50">
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @count
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderTotal)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "OrderDetails", "Login", new { id = item.ID })
-            </td>
-        </tr>
-        count++;
-}       
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @count
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderTotal)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "OrderDetails", "Login", new { id = item.ID })
+                </td>
+            </tr>
+            count++;
+        }
     </tbody>
 </table>

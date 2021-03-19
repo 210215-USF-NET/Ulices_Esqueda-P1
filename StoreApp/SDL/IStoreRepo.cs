@@ -10,14 +10,14 @@ namespace SDL
         List<Orders> getOrderHistory(Customer customer);
         void getOrderHistory(Customer customer, int number);
         void getOrderHistory(Store store, int number);
-        void getOrderHistory(Store store);
+        List<Orders> getOrderHistory(Store store);
         List<Store> getLocationHistory(Customer customer);
         List<LocationVisited> getLocationHistory2(Customer customer);
         List<Store> getAllStores();
         void addVisistedStore(LocationVisited store);
         Customer addCustomer(Customer newCustomer);
-        void addNewOrder();
-        void addOrderItem(OrderItem newOrderItem);
+        Orders addNewOrder();
+        OrderItem addOrderItem(OrderItem newOrderItem);
         void addTrackOrderItem(TrackOrder newTrackOrder);
         void addProductToInventory(StoreInventory storeInventory);
         void addProductToDb(Product product);
@@ -36,5 +36,9 @@ namespace SDL
         int getInventoryQuantity(Product product, Store store);
         StoreInventory getInventoryItem(Product product, Store store);
         Store getStoreByID(int id);
+        Product getProductByID(int id);
+        List<OrderItem> getOrderDetails(Orders order);
+        bool inventoryExists(int productID, int storeID);
+        Orders getOrderByID(int id);
     }
 }

@@ -29,9 +29,9 @@ namespace SBL
             _repo.getOrderHistory(store, number);
         }
 
-        public void getOrderHistory(Store store)
+        public List<Orders> getOrderHistory(Store store)
         {
-            _repo.getOrderHistory(store);
+            return _repo.getOrderHistory(store);
         }
 
         public List<Store> getLocationHistory(Customer customer)
@@ -73,14 +73,14 @@ namespace SBL
             return _repo.getProductByName(productName);
         }
 
-        public void addNewOrder()
+        public Orders addNewOrder()
         {
-            _repo.addNewOrder();
+            return _repo.addNewOrder();
         }
 
-        public void addOrderItem(OrderItem newOrderItem)
+        public OrderItem addOrderItem(OrderItem newOrderItem)
         {
-            _repo.addOrderItem(newOrderItem);
+            return _repo.addOrderItem(newOrderItem);
         }
 
         public void addTrackOrderItem(TrackOrder newTrackOrder)
@@ -165,6 +165,25 @@ namespace SBL
         public Store getStoreByID(int id)
         {
             return _repo.getStoreByID(id);
+        }
+        public List<OrderItem> getOrderDetails(Orders order)
+        {
+            return _repo.getOrderDetails(order);
+        }
+
+        public Product getProductByID(int id)
+        {
+            return _repo.getProductByID(id);
+        }
+
+        public bool inventoryExists(int productID, int storeID)
+        {
+            return _repo.inventoryExists(productID, storeID);
+        }
+
+        public Orders getOrderByID(int id)
+        {
+            return _repo.getOrderByID(id);
         }
     }
 }

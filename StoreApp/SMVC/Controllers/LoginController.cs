@@ -47,12 +47,24 @@ namespace SMVC.Controllers
             List<Orders> orders = _storeBL.getOrderHistory(_customer);
             return View(orders);
         }
+        public ActionResult OrderDetails(int id)
+        {
+            Orders order = _storeBL.getOrderByID(id);
+            List<OrderItem> cartItems = _storeBL.getOrderDetails(order);
+            ViewBag.order = order;
+            ViewBag.products = _storeBL.getAllProducts();
+            return View(cartItems);
+        }
         public ActionResult LocationHistory()
         {
             _customer = JsonSerializer.Deserialize<Customer>(HttpContext.Session.GetString("userData"));
             List<Store> storesVisited = _storeBL.getLocationHistory(_customer);
             ViewBag.Store = storesVisited;
             return View(storesVisited);
+        }
+        public ActionResult GetCustomerByName()
+        {
+            return View();
         }
         // GET: LoginController/Details/5
         public ActionResult Details(int id)

@@ -1,0 +1,71 @@
+﻿@using SModels;
+@using System.Text.Json;
+@using Microsoft.AspNetCore.Http;
+@model IEnumerable<SModels.OrderItem>
+
+@{
+    ViewData["Title"] = "Cart";
+    List<Product> products = ViewBag.products;
+    Orders order = JsonSerializer.Deserialize<Orders>(Context.Session.GetString("orderData"));
+}
+
+<h1 class="text-white-50 text-center">Cart</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-white-50">
+                Product Name:
+            </th>
+            <th class="text-white-50">
+                Price:
+            </th>
+            <th class="text-white-50">
+                Quantity:
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var inv in Model)
+        {
+            @foreach (var prod in products)
+            {
+                @if (inv.ProductID == prod.ID)
+                {
+                    <tr>
+                        <td class="col-md-5 text-white-50">
+                            @prod.ProductName
+                        </td>
+                        <td class="col-md-3 text-white-50">
+                            @prod.Price
+                        </td>
+                        <td class="col-md-2 text-white-50">
+                            @inv.ProductQuantity
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+<div>
+    <dl class="row">
+        <dt class="col-sm-2 text-white-50">
+            Order Total:
+        </dt>
+        <dd class="col-sm-10 text-white-50">
+            @order.OrderTotal
+        </dd>
+    </dl>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Cart">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="submit" value="Purchase" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

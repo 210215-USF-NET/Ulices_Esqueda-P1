@@ -15,6 +15,7 @@ namespace SMVC.Controllers
         private Customer _customer;
         private Store _store;
         private Product _product;
+        private Orders _order;
 
         public StoreController(IStoreBL storeBL, IMapper mapper)
         {
@@ -26,6 +27,13 @@ namespace SMVC.Controllers
         public ActionResult Index()
         {
             return View(_storeBL.getAllStores());
+        }
+
+        public ActionResult SuccessfulPurchase()
+        {
+            Orders order = _storeBL.addNewOrder();
+            HttpContext.Session.SetString("orderData", JsonSerializer.Serialize(order));
+            return View();
         }
 
         // GET: StoreController/Details/StoreName={storename}
@@ -51,6 +59,12 @@ namespace SMVC.Controllers
         {
             return View();
         }
+        public ActionResult OrderHistoryOfLocation(int id)
+        {
+            Store store = _storeBL.getStoreByID(id);
+            List<Orders> orders = _storeBL.getOrderHistory(store);
+            return View(orders);
+        }
         public ActionResult CreateStoreInventory(int id)
         {
             ViewBag.products = _storeBL.getAllProducts();
@@ -66,8 +80,110 @@ namespace SMVC.Controllers
             {
                 try
                 {
-                    _storeBL.addProductToInventory(_mapper.cast2StoreInventory(inventoryVM));
+                    if (_storeBL.inventoryExists(inventoryVM.ProductID, inventoryVM.StoreID))
+                    {
+                        _product = _storeBL.getProductByID(inventoryVM.ProductID);
+                        _store = _storeBL.getStoreByID(inventoryVM.StoreID);
+                        int storeItemQuantity = _storeBL.getInventoryQuantity(_product, _store);
+                        StoreInventory storeInventory = _storeBL.getInventoryItem(_product, _store);
+                        storeInventory.InventoryQuantity = storeItemQuantity + inventoryVM.InventoryQuantity;
+                        _storeBL.updateStoreInventory(storeInventory);
+                    }
+                    else
+                    {
+                        _storeBL.addProductToInventory(_mapper.cast2StoreInventory(inventoryVM));
+                    }
+
                     return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    return View();
+                }
+            }
+            return View();
+        }
+
+        public ActionResult AddQuantityToCart(int storeid, int prodId)
+        {
+            StoreInventoryVM storeInventoryVM = new StoreInventoryVM();
+            storeInventoryVM.StoreID = storeid;
+            storeInventoryVM.ProductID = prodId;
+            return View(storeInventoryVM);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddQuantityToCart(StoreInventoryVM inventoryVM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _product = _storeBL.getProductByID(inventoryVM.ProductID);
+                    _order = JsonSerializer.Deserialize<Orders>(HttpContext.Session.GetString("orderData"));
+                    _store = _storeBL.getStoreByID(inventoryVM.StoreID);
+
+                    OrderItem newOrderItem = new OrderItem();
+                    newOrderItem.ProductID = inventoryVM.ProductID;
+                    newOrderItem.ProductQuantity = inventoryVM.InventoryQuantity;
+                    newOrderItem = _storeBL.addOrderItem(newOrderItem);
+
+                    _order.OrderTotal += _product.Price * newOrderItem.ProductQuantity;
+                    HttpContext.Session.SetString("orderData", JsonSerializer.Serialize(_order));
+
+                    if (HttpContext.Session.GetString("userData") != null)
+                    {
+                        TrackOrder track = new TrackOrder();
+                        _customer = JsonSerializer.Deserialize<Customer>(HttpContext.Session.GetString("userData"));
+                        track.CustomerID = _customer.ID;
+                        track.OrderID = _order.ID;
+                        track.OrderItemID = newOrderItem.ID;
+                        track.StoreID = inventoryVM.StoreID;
+                        _storeBL.addTrackOrderItem(track);
+                    }
+                    else
+                    {
+                        TrackOrder track = new TrackOrder();
+                        track.CustomerID = 8;
+                        track.OrderID = _order.ID;
+                        track.OrderItemID = newOrderItem.ID;
+                        track.StoreID = inventoryVM.StoreID;
+                        _storeBL.addTrackOrderItem(track);
+                    }
+                    int storeItemQuantity = _storeBL.getInventoryQuantity(_product, _store);
+                    StoreInventory storeInventory = _storeBL.getInventoryItem(_product, _store);
+                    storeInventory.InventoryQuantity = storeItemQuantity - inventoryVM.InventoryQuantity;
+                    _storeBL.updateStoreInventory(storeInventory);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    return View();
+                }
+            }
+            return View();
+        }
+
+        public ActionResult Cart()
+        {
+            _order = JsonSerializer.Deserialize<Orders>(HttpContext.Session.GetString("orderData"));
+            List<OrderItem> cartItems = _storeBL.getOrderDetails(_order);
+            ViewBag.products = _storeBL.getAllProducts();
+            return View(cartItems);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Cart(OrderItem orderItem)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Orders order = JsonSerializer.Deserialize<Orders>(HttpContext.Session.GetString("orderData"));
+                    _storeBL.updateOrderTotal(order);
+                    return RedirectToAction(nameof(SuccessfulPurchase));
                 }
                 catch
                 {

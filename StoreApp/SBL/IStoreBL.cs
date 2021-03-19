@@ -12,7 +12,7 @@ namespace SBL
 
         void getOrderHistory(Store store, int number);
 
-        void getOrderHistory(Store store);
+        List<Orders> getOrderHistory(Store store);
 
         List<Store> getLocationHistory(Customer customer);
 
@@ -26,9 +26,9 @@ namespace SBL
 
         void addVisistedStore(LocationVisited store);
 
-        void addNewOrder();
+        Orders addNewOrder();
 
-        void addOrderItem(OrderItem newOrderItem);
+        OrderItem addOrderItem(OrderItem newOrderItem);
 
         void addTrackOrderItem(TrackOrder newTrackOrder);
 
@@ -54,7 +54,7 @@ namespace SBL
         Customer getCustomerByEmail(String email);
 
         Product getProductByName(String productName);
-
+        Orders getOrderByID(int id);
         Product getStoreProductByName(String productName, Store store);
 
         Orders getMostRecentOrder();
@@ -66,5 +66,8 @@ namespace SBL
         bool checkStoreInventory(Store store);
 
         int getInventoryQuantity(Product product, Store store);
+        List<OrderItem> getOrderDetails(Orders order);
+        Product getProductByID(int id);
+        bool inventoryExists(int productID, int storeID);
     }
 }

@@ -54,17 +54,23 @@
             {
                 @if (inv.ProductID == prod.ID)
                 {
-                    <tr>
-                        <td class="col-md-5 text-white-50">
-                            @prod.ProductName
-                        </td>
-                        <td class="col-md-3 text-white-50">
-                            @prod.Price
-                        </td>
-                        <td class="col-md-2 text-white-50">
-                            @inv.InventoryQuantity
-                        </td>
-                    </tr>
+                    @if (inv.InventoryQuantity > 0)
+                    {
+                        <tr>
+                            <td class="col-md-3 text-white-50">
+                                @prod.ProductName
+                            </td>
+                            <td class="col-md-3 text-white-50">
+                                @prod.Price
+                            </td>
+                            <td class="col-md-2 text-white-50">
+                                @inv.InventoryQuantity
+                            </td>
+                            <td class="col-md-4 text-white-50">
+                                @Html.ActionLink("Add to Cart", "AddQuantityToCart", "Store", new { storeid = store.ID, prodId = inv.ProductID })
+                            </td>
+                        </tr>
+                    }
                 }
             }
         }
@@ -77,6 +83,9 @@
     {
         <div>
             @Html.ActionLink("Add Products", "CreateStoreInventory", "Store", new { id = Model.ID })
+        </div>
+        <div>
+            @Html.ActionLink("Order History", "OrderHistoryOfLocation", "Store", new { id = Model.ID })
         </div>
     }
 }

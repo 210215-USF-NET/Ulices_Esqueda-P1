@@ -17,7 +17,7 @@ namespace SMVC.Models
 
         [DisplayName("Quantity")]
         [Required]
-        [Range(1, Int32.MaxValue, ErrorMessage = "Quanitity should not be negative!")]
+        [Range(1, 10, ErrorMessage = "Quanitity should not be negative!")]
         public int InventoryQuantity { get; set; }
     }
 }
